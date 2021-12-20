@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Page</title>
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="600" style="border:10px solid blue; onclick="Bite()"">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+<script>
+var canvas=document.getElementById("myCanvas");
+var ctx=canvas.getContext("2d");
+var pacmanX=0;
+var pacmanY=0;
+var elevatorY=0;
+var elevatorX=0;
+
+function Pacman()
+{
+ctx.beginPath(); 
+ctx.arc(0,0,90,30*Math.PI/180,330*Math.PI/180,false);
+ctx.lineTo(0,0);
+ctx.closePath();
+ctx.fillStyle="yellow";
+ctx.fill();
+ctx.beginPath();
+ctx.arc(0,-30,10,0*Math.PI,180*Math.PI,false);
+ctx.fillStyle="black";
+ctx.fill();
+}
+function Bite()
+{
+ctx.beginPath();
+ctx.arc(0,0,90,5*Math.PI/180,348*Math.PI/180,false);
+ctx.lineTo(0,0);
+ctx.closePath();
+ctx.fillStyle="yellow";
+ctx.fill();
+ctx.beginPath();
+ctx.arc(0,-30,10,0*Math.PI,180*Math.PI,false);
+ctx.fillStyle="black";
+ctx.fill();
+}
+var x=0;
+var direction=1;
+Pacman();
+
+setInterval(Update,90);
+function Update()
+{
+    x++;
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+	ctx.save();
+    if(direction==1){
+	ctx.translate(pacmanX,90);
+	pacmanX+=10;
+	}
+	if(pacmanX>canvas.width+80){
+	direction=-1;
+	}
+	if(direction==-1){
+	ctx.translate(pacmanX,90);  /*--changing pacman direction--*/
+	pacmanX-=10;
+	ctx.scale(-1,1);
+	}
+	
+	if(pacmanX<canvas.width-canvas.width-60){
+	direction=1;
+	}
+	
+    if(x%2==0)
+    Pacman();
+    else
+    Bite();
+	ctx.restore();
+
+	
+    ctx.save();
+	Elevator();
+	ctx.restore();
+
+	
+      
+}
+
+function Elevator(){	
+    ctx.fillStyle="black";
+	ctx.fillRect(0,180,canvas.width,30);
+	
+}
+
+</script>
+
+</body>
+</html>
